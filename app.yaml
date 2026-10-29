@@ -8,6 +8,8 @@ command:
 env:
   - name: TRACE_TABLE_FQN
     value: ""
-  # Bind a SQL warehouse resource in the Apps UI / DABs, then uncomment:
+  - name: SERVICE_NAME
+    value: ""
+  # Bind a SQL warehouse in the Apps UI, then uncomment:
   # - name: DATABRICKS_WAREHOUSE_ID
   #   valueFrom: sql-warehouse

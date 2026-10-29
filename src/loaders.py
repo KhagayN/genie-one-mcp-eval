@@ -120,6 +120,11 @@ def load_spans_from_table(
         service_clause = "AND service_name = ?"
         params.append(service_name)
 
+    # Dotted VARIANT keys: CAST(attributes:`key`) is empty on some unified
+    # tables. JSON path on to_json(attributes) works.
+    tool_name_expr = "get_json_object(to_json(attributes), '$[\"gen_ai.tool.name\"]')"
+    mcp_method_expr = "get_json_object(to_json(attributes), '$[\"mcp.method.name\"]')"
+
     query = f"""
     SELECT
       trace_id,
@@ -134,8 +139,9 @@ def load_spans_from_table(
       attributes
     FROM {quoted}
     WHERE time >= current_timestamp() - INTERVAL {hours} HOURS
-      AND CAST(attributes:`mcp.method.name` AS STRING) = 'tools/call'
-      AND CAST(attributes:`gen_ai.tool.name` AS STRING) IN ({tools_list})
+      AND {mcp_method_expr} = 'tools/call'
+      AND {tool_name_expr} IN ({tools_list})
+      AND kind = 'SPAN_KIND_SERVER'
       {service_clause}
     ORDER BY start_time_unix_nano ASC
     LIMIT {limit}

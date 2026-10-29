@@ -21,6 +21,24 @@ def attr_get(attributes: dict[str, Any], key: str, default: Any = None) -> Any:
     return default
 
 
+def unwrap_mcp_result(parsed: Any) -> dict[str, Any]:
+    """Normalize Gateway MCP tool results (flat dummy JSON or MCP content envelope)."""
+    if not isinstance(parsed, dict):
+        return {"value": parsed} if parsed is not None else {}
+    sc = parsed.get("structuredContent")
+    if isinstance(sc, dict):
+        out = dict(sc)
+        if parsed.get("isError"):
+            out["error"] = out.get("error") or "mcp isError=true"
+        content = parsed.get("content")
+        if isinstance(content, list) and content:
+            first = content[0]
+            if isinstance(first, dict) and first.get("text") and not out.get("text"):
+                out["text"] = first["text"]
+        return out
+    return parsed
+
+
 def parse_jsonish(value: Any) -> Any:
     if value is None:
         return None
@@ -54,7 +72,8 @@ def tool_result(span: dict[str, Any]) -> dict[str, Any]:
     if raw is None:
         raw = attr_get(span.get("attributes") or {}, "mlflow.spanOutputs")
     parsed = parse_jsonish(raw)
-    return parsed if isinstance(parsed, dict) else {"value": parsed}
+    unwrapped = unwrap_mcp_result(parsed)
+    return unwrapped if isinstance(unwrapped, dict) else {"value": unwrapped}
 
 
 def status_code(span: dict[str, Any]) -> str:
@@ -163,6 +182,13 @@ def _build_turn(conversation_id: str, response_id: str, spans: list[dict[str, An
         if isinstance(rows, list):
             query_rows = rows
 
+    query_items = last_poll_result.get("query_items") or []
+    if not generated_sql and isinstance(query_items, list):
+        for item in reversed(query_items):
+            if isinstance(item, dict) and item.get("sql"):
+                generated_sql = item["sql"]
+                break
+
     generated_sql = (
         generated_sql
         or last_poll_result.get("generated_sql")
@@ -171,17 +197,19 @@ def _build_turn(conversation_id: str, response_id: str, spans: list[dict[str, An
     )
 
     response_text = (
-        last_poll_result.get("answer")
+        last_poll_result.get("final_answer")
+        or last_poll_result.get("answer")
         or last_poll_result.get("text")
         or last_poll_result.get("response")
         or last_poll_result.get("narration")
         or ""
     )
+    deep_link = last_poll_result.get("deep_link")
     citations = (
         last_poll_result.get("citations")
         or last_poll_result.get("deep_links")
         or last_poll_result.get("sources")
-        or []
+        or ([deep_link] if deep_link else [])
     )
     turn_status = (
         last_poll_result.get("status")
@@ -195,7 +223,7 @@ def _build_turn(conversation_id: str, response_id: str, spans: list[dict[str, An
         if sc in ("STATUS_CODE_ERROR", "ERROR"):
             error = (span.get("status") or {}).get("message") or sc
         rpc = attr_get(span.get("attributes") or {}, "rpc.response.status_code")
-        if rpc not in (None, 0, "0"):
+        if rpc not in (None, 0, "0", 200, "200"):
             error = error or f"rpc.response.status_code={rpc}"
         res_err = tool_result(span).get("error")
         if res_err:

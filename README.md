@@ -37,6 +37,8 @@ This is a one-time metastore-admin setup. The sample app does not create the tab
 
 Schema details: [Unified trace table schema reference](https://docs.databricks.com/aws/en/ai-gateway/unified-trace-table-reference). MCP spans use `mcp.method.name`, `gen_ai.tool.name`, and the `gen_ai.tool.call.*` attributes this loader expects.
 
+Live tables use dotted keys inside a `VARIANT` `attributes` column. The loader reads those with `get_json_object(to_json(attributes), '$["gen_ai.tool.name"]')` (colon extract on `attributes` can return empty). It keeps `kind = 'SPAN_KIND_SERVER'` so client/server duplicates of the same MCP call are not counted twice. Reconstruct unwraps the MCP envelope (`content` + `structuredContent.final_answer` / `query_items` / `deep_link`), not only the flat dummy JSON.
+
 ### 2. Point this sample at the table
 
 The loader queries `{TRACE_TABLE_FQN}` for `tools/call` rows whose tool is one of `genie_ask`, `view_ask`, `genie_poll_response`, `genie_get_query_result`, `genie_cancel_response`. The identity that runs SQL (your user locally, or the Databricks App service principal) needs `SELECT` on that table and warehouse **Can use**.
