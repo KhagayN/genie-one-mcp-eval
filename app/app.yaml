@@ -1,0 +1,13 @@
+command:
+  - "streamlit"
+  - "run"
+  - "app.py"
+  - "--server.port=8000"
+  - "--server.address=0.0.0.0"
+
+env:
+  - name: TRACE_TABLE_FQN
+    value: ""
+  # Bind a SQL warehouse resource in the Apps UI / DABs, then uncomment:
+  # - name: DATABRICKS_WAREHOUSE_ID
+  #   valueFrom: sql-warehouse

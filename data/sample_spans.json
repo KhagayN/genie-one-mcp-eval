@@ -1,0 +1,275 @@
+{
+  "source": "fixture",
+  "description": "Synthetic Unity Gateway MCP spans for Genie One. Replace by querying TRACE_TABLE_FQN in production.",
+  "spans": [
+    {
+      "trace_id": "aa111111111111111111111111111111",
+      "span_id": "a100000000000001",
+      "parent_span_id": null,
+      "name": "system.ai.genie_one_mcp/tools/call",
+      "service_name": "system.ai.genie_one_mcp",
+      "status": {"code": "STATUS_CODE_OK"},
+      "time": "2026-10-28T14:00:00Z",
+      "start_time_unix_nano": 1761660000000000000,
+      "end_time_unix_nano": 1761660000800000000,
+      "attributes": {
+        "mcp.method.name": "tools/call",
+        "gen_ai.tool.name": "genie_ask",
+        "gen_ai.operation.name": "execute_tool",
+        "enduser.id": "analyst@example.com",
+        "mlflow.spanType": "TOOL",
+        "gen_ai.tool.call.arguments": "{\"question\":\"What was total order revenue last week?\"}",
+        "gen_ai.tool.call.result": "{\"conversation_id\":\"conv-retail-001\",\"response_id\":\"resp-001\",\"status\":\"in_progress\"}"
+      }
+    },
+    {
+      "trace_id": "aa111111111111111111111111111112",
+      "span_id": "a100000000000002",
+      "parent_span_id": null,
+      "name": "system.ai.genie_one_mcp/tools/call",
+      "service_name": "system.ai.genie_one_mcp",
+      "status": {"code": "STATUS_CODE_OK"},
+      "time": "2026-10-28T14:00:03Z",
+      "start_time_unix_nano": 1761660003000000000,
+      "end_time_unix_nano": 1761660004500000000,
+      "attributes": {
+        "mcp.method.name": "tools/call",
+        "gen_ai.tool.name": "genie_poll_response",
+        "enduser.id": "analyst@example.com",
+        "mlflow.spanType": "TOOL",
+        "gen_ai.tool.call.arguments": "{\"conversation_id\":\"conv-retail-001\",\"response_id\":\"resp-001\"}",
+        "gen_ai.tool.call.result": "{\"status\":\"in_progress\",\"progress_steps\":[\"Searching tables\",\"Drafting SQL\"]}"
+      }
+    },
+    {
+      "trace_id": "aa111111111111111111111111111113",
+      "span_id": "a100000000000003",
+      "parent_span_id": null,
+      "name": "system.ai.genie_one_mcp/tools/call",
+      "service_name": "system.ai.genie_one_mcp",
+      "status": {"code": "STATUS_CODE_OK"},
+      "time": "2026-10-28T14:00:12Z",
+      "start_time_unix_nano": 1761660012000000000,
+      "end_time_unix_nano": 1761660012800000000,
+      "attributes": {
+        "mcp.method.name": "tools/call",
+        "gen_ai.tool.name": "genie_poll_response",
+        "enduser.id": "analyst@example.com",
+        "mlflow.spanType": "TOOL",
+        "gen_ai.tool.call.arguments": "{\"conversation_id\":\"conv-retail-001\",\"response_id\":\"resp-001\"}",
+        "gen_ai.tool.call.result": "{\"status\":\"completed\",\"answer\":\"Total order revenue last week was 128450.75.\",\"generated_sql\":\"SELECT SUM(order_amount) AS revenue FROM sales.gold.orders WHERE order_date >= current_date() - INTERVAL 7 DAYS\",\"citations\":[{\"title\":\"sales.gold.orders\",\"url\":\"https://example.databricks.com/explore/sales.gold.orders\"}],\"progress_steps\":[\"Searching tables\",\"Drafting SQL\",\"Running query\"]}"
+      }
+    },
+    {
+      "trace_id": "aa111111111111111111111111111114",
+      "span_id": "a100000000000004",
+      "parent_span_id": null,
+      "name": "system.ai.genie_one_mcp/tools/call",
+      "service_name": "system.ai.genie_one_mcp",
+      "status": {"code": "STATUS_CODE_OK"},
+      "time": "2026-10-28T14:00:13Z",
+      "start_time_unix_nano": 1761660013000000000,
+      "end_time_unix_nano": 1761660013600000000,
+      "attributes": {
+        "mcp.method.name": "tools/call",
+        "gen_ai.tool.name": "genie_get_query_result",
+        "enduser.id": "analyst@example.com",
+        "mlflow.spanType": "TOOL",
+        "gen_ai.tool.call.arguments": "{\"conversation_id\":\"conv-retail-001\",\"response_id\":\"resp-001\"}",
+        "gen_ai.tool.call.result": "{\"sql\":\"SELECT SUM(order_amount) AS revenue FROM sales.gold.orders WHERE order_date >= current_date() - INTERVAL 7 DAYS\",\"schema\":[{\"name\":\"revenue\",\"type\":\"DOUBLE\"}],\"rows\":[{\"revenue\":128450.75}]}"
+      }
+    },
+    {
+      "trace_id": "aa111111111111111111111111111121",
+      "span_id": "a200000000000001",
+      "parent_span_id": null,
+      "name": "system.ai.genie_one_mcp/tools/call",
+      "service_name": "system.ai.genie_one_mcp",
+      "status": {"code": "STATUS_CODE_OK"},
+      "time": "2026-10-28T14:02:00Z",
+      "start_time_unix_nano": 1761660120000000000,
+      "end_time_unix_nano": 1761660120700000000,
+      "attributes": {
+        "mcp.method.name": "tools/call",
+        "gen_ai.tool.name": "genie_ask",
+        "enduser.id": "analyst@example.com",
+        "mlflow.spanType": "TOOL",
+        "gen_ai.tool.call.arguments": "{\"question\":\"Break that down by region.\",\"conversation_id\":\"conv-retail-001\"}",
+        "gen_ai.tool.call.result": "{\"conversation_id\":\"conv-retail-001\",\"response_id\":\"resp-002\",\"status\":\"in_progress\"}"
+      }
+    },
+    {
+      "trace_id": "aa111111111111111111111111111122",
+      "span_id": "a200000000000002",
+      "parent_span_id": null,
+      "name": "system.ai.genie_one_mcp/tools/call",
+      "service_name": "system.ai.genie_one_mcp",
+      "status": {"code": "STATUS_CODE_OK"},
+      "time": "2026-10-28T14:02:08Z",
+      "start_time_unix_nano": 1761660128000000000,
+      "end_time_unix_nano": 1761660129000000000,
+      "attributes": {
+        "mcp.method.name": "tools/call",
+        "gen_ai.tool.name": "genie_poll_response",
+        "enduser.id": "analyst@example.com",
+        "mlflow.spanType": "TOOL",
+        "gen_ai.tool.call.arguments": "{\"conversation_id\":\"conv-retail-001\",\"response_id\":\"resp-002\"}",
+        "gen_ai.tool.call.result": "{\"status\":\"completed\",\"answer\":\"West 61200.10, East 40200.40, Central 27050.25.\",\"generated_sql\":\"SELECT region, SUM(order_amount) AS revenue FROM sales.gold.orders WHERE order_date >= current_date() - INTERVAL 7 DAYS GROUP BY region\",\"citations\":[{\"title\":\"sales.gold.orders\"}]}"
+      }
+    },
+    {
+      "trace_id": "aa111111111111111111111111111123",
+      "span_id": "a200000000000003",
+      "parent_span_id": null,
+      "name": "system.ai.genie_one_mcp/tools/call",
+      "service_name": "system.ai.genie_one_mcp",
+      "status": {"code": "STATUS_CODE_OK"},
+      "time": "2026-10-28T14:02:09Z",
+      "start_time_unix_nano": 1761660129000000000,
+      "end_time_unix_nano": 1761660129500000000,
+      "attributes": {
+        "mcp.method.name": "tools/call",
+        "gen_ai.tool.name": "genie_get_query_result",
+        "enduser.id": "analyst@example.com",
+        "mlflow.spanType": "TOOL",
+        "gen_ai.tool.call.arguments": "{\"conversation_id\":\"conv-retail-001\",\"response_id\":\"resp-002\"}",
+        "gen_ai.tool.call.result": "{\"sql\":\"SELECT region, SUM(order_amount) AS revenue FROM sales.gold.orders WHERE order_date >= current_date() - INTERVAL 7 DAYS GROUP BY region\",\"rows\":[{\"region\":\"West\",\"revenue\":61200.10},{\"region\":\"East\",\"revenue\":40200.40},{\"region\":\"Central\",\"revenue\":27050.25}]}"
+      }
+    },
+    {
+      "trace_id": "bb222222222222222222222222222221",
+      "span_id": "b100000000000001",
+      "parent_span_id": null,
+      "name": "system.ai.genie_one_mcp/tools/call",
+      "service_name": "system.ai.genie_one_mcp",
+      "status": {"code": "STATUS_CODE_OK"},
+      "time": "2026-10-28T14:10:00Z",
+      "start_time_unix_nano": 1761660600000000000,
+      "end_time_unix_nano": 1761660600600000000,
+      "attributes": {
+        "mcp.method.name": "tools/call",
+        "gen_ai.tool.name": "genie_ask",
+        "enduser.id": "analyst@example.com",
+        "mlflow.spanType": "TOOL",
+        "gen_ai.tool.call.arguments": "{\"question\":\"How many orders were cancelled yesterday?\"}",
+        "gen_ai.tool.call.result": "{\"conversation_id\":\"conv-retail-002\",\"response_id\":\"resp-010\",\"status\":\"in_progress\"}"
+      }
+    },
+    {
+      "trace_id": "bb222222222222222222222222222222",
+      "span_id": "b100000000000002",
+      "parent_span_id": null,
+      "name": "system.ai.genie_one_mcp/tools/call",
+      "service_name": "system.ai.genie_one_mcp",
+      "status": {"code": "STATUS_CODE_OK"},
+      "time": "2026-10-28T14:10:09Z",
+      "start_time_unix_nano": 1761660609000000000,
+      "end_time_unix_nano": 1761660610000000000,
+      "attributes": {
+        "mcp.method.name": "tools/call",
+        "gen_ai.tool.name": "genie_poll_response",
+        "enduser.id": "analyst@example.com",
+        "mlflow.spanType": "TOOL",
+        "gen_ai.tool.call.arguments": "{\"conversation_id\":\"conv-retail-002\",\"response_id\":\"resp-010\"}",
+        "gen_ai.tool.call.result": "{\"status\":\"completed\",\"answer\":\"There were 942 cancelled orders yesterday.\",\"generated_sql\":\"SELECT COUNT(*) AS cancelled_orders FROM sales.gold.orders WHERE status = 'cancelled' AND order_date = current_date() - 1\",\"citations\":[{\"title\":\"sales.gold.orders\"}]}"
+      }
+    },
+    {
+      "trace_id": "bb222222222222222222222222222223",
+      "span_id": "b100000000000003",
+      "parent_span_id": null,
+      "name": "system.ai.genie_one_mcp/tools/call",
+      "service_name": "system.ai.genie_one_mcp",
+      "status": {"code": "STATUS_CODE_OK"},
+      "time": "2026-10-28T14:10:10Z",
+      "start_time_unix_nano": 1761660610000000000,
+      "end_time_unix_nano": 1761660610400000000,
+      "attributes": {
+        "mcp.method.name": "tools/call",
+        "gen_ai.tool.name": "genie_get_query_result",
+        "enduser.id": "analyst@example.com",
+        "mlflow.spanType": "TOOL",
+        "gen_ai.tool.call.arguments": "{\"conversation_id\":\"conv-retail-002\",\"response_id\":\"resp-010\"}",
+        "gen_ai.tool.call.result": "{\"sql\":\"SELECT COUNT(*) AS cancelled_orders FROM sales.gold.orders WHERE status = 'cancelled' AND order_date = current_date() - 1\",\"rows\":[{\"cancelled_orders\":18}]}"
+      }
+    },
+    {
+      "trace_id": "cc333333333333333333333333333331",
+      "span_id": "c100000000000001",
+      "parent_span_id": null,
+      "name": "system.ai.genie_one_mcp/tools/call",
+      "service_name": "system.ai.genie_one_mcp",
+      "status": {"code": "STATUS_CODE_OK"},
+      "time": "2026-10-28T14:20:00Z",
+      "start_time_unix_nano": 1761661200000000000,
+      "end_time_unix_nano": 1761661200500000000,
+      "attributes": {
+        "mcp.method.name": "tools/call",
+        "gen_ai.tool.name": "genie_ask",
+        "enduser.id": "analyst@example.com",
+        "mlflow.spanType": "TOOL",
+        "gen_ai.tool.call.arguments": "{\"question\":\"What is the average order value this month?\"}",
+        "gen_ai.tool.call.result": "{\"conversation_id\":\"conv-retail-003\",\"response_id\":\"resp-020\",\"status\":\"in_progress\"}"
+      }
+    },
+    {
+      "trace_id": "cc333333333333333333333333333332",
+      "span_id": "c100000000000002",
+      "parent_span_id": null,
+      "name": "system.ai.genie_one_mcp/tools/call",
+      "service_name": "system.ai.genie_one_mcp",
+      "status": {"code": "STATUS_CODE_OK"},
+      "time": "2026-10-28T14:20:06Z",
+      "start_time_unix_nano": 1761661206000000000,
+      "end_time_unix_nano": 1761661207000000000,
+      "attributes": {
+        "mcp.method.name": "tools/call",
+        "gen_ai.tool.name": "genie_poll_response",
+        "enduser.id": "analyst@example.com",
+        "mlflow.spanType": "TOOL",
+        "gen_ai.tool.call.arguments": "{\"conversation_id\":\"conv-retail-003\",\"response_id\":\"resp-020\"}",
+        "gen_ai.tool.call.result": "{\"status\":\"completed\",\"answer\":\"SELECT AVG(order_amount) FROM sales.gold.orders WHERE month(order_date) = month(current_date())\",\"generated_sql\":\"SELECT AVG(order_amount) FROM sales.gold.orders WHERE month(order_date) = month(current_date())\",\"citations\":[]}"
+      }
+    },
+    {
+      "trace_id": "dd444444444444444444444444444441",
+      "span_id": "d100000000000001",
+      "parent_span_id": null,
+      "name": "system.ai.genie_one_mcp/tools/call",
+      "service_name": "system.ai.genie_one_mcp",
+      "status": {"code": "STATUS_CODE_OK"},
+      "time": "2026-10-28T14:30:00Z",
+      "start_time_unix_nano": 1761661800000000000,
+      "end_time_unix_nano": 1761661800400000000,
+      "attributes": {
+        "mcp.method.name": "tools/call",
+        "gen_ai.tool.name": "genie_ask",
+        "enduser.id": "analyst@example.com",
+        "mlflow.spanType": "TOOL",
+        "gen_ai.tool.call.arguments": "{\"question\":\"Top 5 products by units sold last quarter?\"}",
+        "gen_ai.tool.call.result": "{\"conversation_id\":\"conv-retail-004\",\"response_id\":\"resp-030\",\"status\":\"in_progress\"}"
+      }
+    },
+    {
+      "trace_id": "dd444444444444444444444444444442",
+      "span_id": "d100000000000002",
+      "parent_span_id": null,
+      "name": "system.ai.genie_one_mcp/tools/call",
+      "service_name": "system.ai.genie_one_mcp",
+      "status": {"code": "STATUS_CODE_ERROR", "message": "SQL warehouse timeout"},
+      "time": "2026-10-28T14:32:00Z",
+      "start_time_unix_nano": 1761661920000000000,
+      "end_time_unix_nano": 1761661921000000000,
+      "attributes": {
+        "mcp.method.name": "tools/call",
+        "gen_ai.tool.name": "genie_poll_response",
+        "enduser.id": "analyst@example.com",
+        "rpc.response.status_code": -32003,
+        "error.type": "upstream_error",
+        "mlflow.spanType": "TOOL",
+        "gen_ai.tool.call.arguments": "{\"conversation_id\":\"conv-retail-004\",\"response_id\":\"resp-030\"}",
+        "gen_ai.tool.call.result": "{\"status\":\"failed\",\"error\":\"SQL warehouse timeout\",\"answer\":\"\"}"
+      }
+    }
+  ]
+}

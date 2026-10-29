@@ -1,0 +1,27 @@
+{
+  "expectations": [
+    {
+      "turn_id": "conv-retail-001:resp-001",
+      "response_id": "resp-001",
+      "expected_facts": [
+        "Total order revenue last week is 128450.75"
+      ]
+    },
+    {
+      "turn_id": "conv-retail-001:resp-002",
+      "response_id": "resp-002",
+      "expected_facts": [
+        "West region revenue is 61200.10",
+        "East region revenue is 40200.40",
+        "Central region revenue is 27050.25"
+      ]
+    },
+    {
+      "turn_id": "conv-retail-002:resp-010",
+      "response_id": "resp-010",
+      "expected_facts": [
+        "Cancelled orders yesterday equal 18"
+      ]
+    }
+  ]
+}
